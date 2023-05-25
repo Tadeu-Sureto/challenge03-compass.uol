@@ -1,0 +1,108 @@
+.apresentacao{
+    padding: 203px 20px 0 158px;
+}
+
+.mensagem{
+    padding: 27px 150px 95px 0;
+}
+
+.inputs h2{
+    font-weight: 400;
+    font-size: 32px;
+    line-height: 48px;
+    padding: 0 0 0 158px;
+}
+
+.inputs form{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding-left: 155px;
+}
+
+.inputs .login-data input{
+    width: 406px;
+    height: 62px;
+    border-radius: 30px;
+    border: solid 2px #f5f5f5;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    background-image: linear-gradient(180deg, #2E2F36 0%, #17181C 100%);
+    padding-top: 0px;
+}
+
+.inputs .login-data input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0px 1000px #2E2F36 inset;
+    -webkit-text-fill-color: #f5f5f5 !important;
+}
+
+.inputs .login-data button{
+    width: 406px;
+    height: 62px;
+    border-radius: 30px;
+    border: solid 1px #fe2e05;
+    background-image: linear-gradient(180deg, #ad2d14 0%, #f42e07 100%);
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 24px;
+    margin-top: 30px;
+}
+
+.inputs .login-data .user .user-name{
+    padding-left: 20px;
+}
+
+.inputs .login-data .user .user-name::placeholder{
+    color: #f5f5f5;
+}
+
+.inputs .login-data .user .img-user{
+    margin: 50px 0 -5px -50px;
+}
+
+.inputs .login-data .password .user-password{
+    padding-left: 20px;
+}
+
+.inputs .login-data .password .user-password::placeholder{
+    color: #f5f5f5;
+}
+
+.inputs .login-data .password .img-password{
+    margin: 50px 0 -5px -50px;
+}
+
+.inputs .login-data button:hover{
+    opacity: 0.8;
+}
+
+.inputs .login-data small{
+    color: #E9B425;
+    padding-top: 20px;
+    padding-left: 40px;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 24px;
+    width: 500px;
+}
+
+a{
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 24px;
+}
+
+form p{
+    padding: 10px 0 0 90px;
+}
+
+.hidden{
+    display: none;
+}
+
+
+.image{
+    width: 50%;
+    height: 100vh;
+}
