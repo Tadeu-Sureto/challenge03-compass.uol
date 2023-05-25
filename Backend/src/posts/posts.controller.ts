@@ -13,14 +13,14 @@ export class UsersController {
     return this.UsersService.create(createUsersService);
 }
 
-@Get() 
+@Get() // aq retorna todos os users...
   async findALL() {
     return this.UsersService.findALL();
   }
 
-  @Get(':id') 
+  @Get(':id') // aq ele retorna só o user com o id q passamos :)  opa, id é sempre string em mongo ta
   async getById(@Param('id') id: string): Promise<User> {
-    return this.UsersService.getById(id); 
+    return this.UsersService.getById(id); // sempre q mudar no controller, muda service tbm e vice e versa!
   }
 
   @Put(':id')
@@ -28,7 +28,7 @@ export class UsersController {
     return this.UsersService.update(id, UpdateUser);
   }
 
-  @Delete(':id') 
+  @Delete(':id') // repara q pra deletar precisamos o id do user.....
   async delete(@Param('id') id: string) {
     this.UsersService.delete(id);
   }
