@@ -5,7 +5,7 @@ import { CommentDocument, Comment } from './comment';
 import { CreateComment } from './create-update-comment/create-comment';
 
 @Injectable()
-export class PostsService {
+export class CommentsService {
   constructor(
     @InjectModel(Comment.name) private commentModel: Model<CommentDocument>
   ) {}

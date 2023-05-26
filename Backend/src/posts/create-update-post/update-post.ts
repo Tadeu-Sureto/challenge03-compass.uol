@@ -1,4 +1,8 @@
-import { PartialType } from '@nestjs/mapped-types';
-import { CreatePost } from './create-post';
-
-export class UpdatePost extends PartialType(CreatePost) {}
+export class UpdatePost {
+    user?: string;
+    post_date?: string;
+    description?: string;
+    likes?: number;
+    url_imagem?: string;
+    comments?: Comment[];
+  }

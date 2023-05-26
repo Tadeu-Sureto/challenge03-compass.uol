@@ -10,8 +10,8 @@ export class Post extends Document {
     @Prop()
   description: string;
 
-  @Prop()
-  like: number;
+  @Prop({default: 0})
+  likes?: number;
 
   @Prop()
   comments: Array<Comment>;
@@ -20,7 +20,7 @@ export class Post extends Document {
   post_date: string;
 
   @Prop()
-  url_imagem: string;
+  url_imagem?: string;
 }
 
-export const UserSchema = SchemaFactory.createForClass(Post);
+export const PostSchema = SchemaFactory.createForClass(Post);

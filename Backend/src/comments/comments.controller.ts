@@ -1,9 +1,9 @@
 import { Controller, Delete, Get, Param, Body, Post, Put } from '@nestjs/common';
 import { Comment } from './comment';
-import { CommentsService } from './comments';
+import { CommentsService } from './comments.service';
 
-@Controller('Users')
-export class UsersController {
+@Controller('Comments')
+export class CommentsController {
   constructor(
     private readonly commentService: CommentsService
   ) {}
@@ -14,7 +14,7 @@ export class UsersController {
 }
 
 @Get()
-  async findALL() {
+  async findAll() {
     return this.commentService.findAll();
   }
 

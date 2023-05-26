@@ -2,6 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { User } from './user';
 import { Model } from 'mongoose';
+import { CreateUser } from './create-update-user/create-user';
+import { UpdateUser } from './create-update-user/update-user';
 
 @Injectable()
 export class UsersService {
@@ -17,13 +19,14 @@ export class UsersService {
     return this.UserModel.findById(id).exec();
   }
 
-  async create(User: User): Promise<User> {
+
+  async create(User: CreateUser): Promise<User> {
     const createUser = new this.UserModel(User);
     return createUser.save();
   }
 
 
-  async update(id: string, User: User): Promise<User> {
+  async update(id: string, User: UpdateUser): Promise<User> {
     return this.UserModel.findByIdAndUpdate(
     id,
     {$set: User},

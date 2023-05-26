@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { Post, PostSchema } from './comment';
+import { Post, PostSchema } from '../posts/post';
 import { Comment, CommentSchema } from './comment';
-import { CommentsService } from './comment';
-import { CommentsController } from './comment';
+import { CommentsService } from './comments.service';
+import { CommentsController } from './comments.controller';
 
 @Module({
   imports: [
@@ -22,4 +22,4 @@ import { CommentsController } from './comment';
   controllers: [CommentsController],
   providers: [CommentsService]
 })
-export class PostsModule {}
+export class CommentsModule {}

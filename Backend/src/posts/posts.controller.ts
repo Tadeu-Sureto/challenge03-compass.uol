@@ -2,8 +2,8 @@ import { Controller, Delete, Get, Param, Body, Post as PostDecorator, Put } from
 import { Post } from './post';
 import { PostsService } from './posts.service';
 
-@Controller('Users')
-export class UsersController {
+@Controller('Posts')
+export class PostsController {
   constructor(
     private readonly postsService: PostsService
   ) {}
