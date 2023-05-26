@@ -1,37 +1,38 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { User } from './user';
 import { Model } from 'mongoose';
+import { PostDocument, Post } from './posts';
+import { CreatePost } from './create-post';
 
 @Injectable()
-export class UsersService {
+export class PostsService {
   constructor(
-    @InjectModel(User.name) private UserModel: Model<User>
+    @InjectModel(Post.name) private postModel: Model<PostDocument>
   ) {}
 
-  async findALL(): Promise<User[]> {
-    return this.UserModel.find().exec();
+  async findAll(): Promise<Post[]> {
+    return this.postModel.find().exec();
   }
 
-  async getById(id: string): Promise<User> {
-    return this.UserModel.findById(id).exec();
+  async getById(id: string): Promise<Post> {
+    return this.postModel.findById(id).exec();
   }
 
-  async create(User: User): Promise<User> {
-    const createUser = new this.UserModel(User);
-    return createUser.save();
+  async create(createPost: CreatePost): Promise<Post> {
+    const post = new this.postModel(createPost);
+    return post.save();
   }
 
 
-  async update(id: string, User: User): Promise<User> {
-    return this.UserModel.findByIdAndUpdate(
+  async update(id: string, updatePost: Post): Promise<Post> {
+    return this.postModel.findByIdAndUpdate(
     id,
-    {$set: User},
+    {$set: updatePost},
     {new: true},
     ).exec();
   }
 
   async delete(id: string): Promise<any> {
-    return this.UserModel.deleteOne({_id: id,}).exec();
+    return this.postModel.deleteOne({_id: id,}).exec();
   }
 }

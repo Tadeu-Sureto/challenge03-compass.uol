@@ -1,36 +1,36 @@
-import { Controller, Delete, Get, Param, Body, Post, Put } from '@nestjs/common';
-import { User } from './user';
-import { UsersService } from './users.service';
+import { Controller, Delete, Get, Param, Body, Post as PostDecorator, Put } from '@nestjs/common';
+import { Post } from './post';
+import { PostsService } from './posts.service';
 
 @Controller('Users')
 export class UsersController {
   constructor(
-    private readonly UsersService: UsersService
+    private readonly postsService: PostsService
   ) {}
 
-@Post()
-  async create(@Body() createUsersService: User){
-    return this.UsersService.create(createUsersService);
+@PostDecorator()
+  async create(@Body() createPost: Post){
+    return this.postsService.create(createPost);
 }
 
-@Get() // aq retorna todos os users...
+@Get()
   async findALL() {
-    return this.UsersService.findALL();
+    return this.postsService.findAll();
   }
 
-  @Get(':id') // aq ele retorna só o user com o id q passamos :)  opa, id é sempre string em mongo ta
-  async getById(@Param('id') id: string): Promise<User> {
-    return this.UsersService.getById(id); // sempre q mudar no controller, muda service tbm e vice e versa!
+  @Get(':id')
+  async getById(@Param('id') id: string): Promise<Post> {
+    return this.postsService.getById(id);
   }
 
   @Put(':id')
-  async update(@Param('id') id: string, @Body() UpdateUser: User): Promise<User> {
-    return this.UsersService.update(id, UpdateUser);
+  async update(@Param('id') id: string, @Body() updatePost: Post): Promise<Post> {
+    return this.postsService.update(id, updatePost);
   }
 
-  @Delete(':id') // repara q pra deletar precisamos o id do user.....
+  @Delete(':id')
   async delete(@Param('id') id: string) {
-    this.UsersService.delete(id);
+    this.postsService.delete(id);
   }
 
 }

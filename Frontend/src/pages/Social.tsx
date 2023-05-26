@@ -11,9 +11,7 @@ import HappyFace from "../assets/vector-happy-face.png";
 import Clock from "../assets/vector-clock.png";
 import Divider from "../assets/divider.png";
 import Like from "../assets/vector-like.png";
-import FrameLike from "../assets/frame-like.png";
 import Comments from "../assets/vector-comments.png";
-import FrameComments from "../assets/frame-comments.png";
 import Share from "../assets/vector-share.png";
 
 interface Posts {

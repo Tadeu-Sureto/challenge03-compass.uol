@@ -9,7 +9,7 @@ import { MongooseModule } from '@nestjs/mongoose';
     
     MongooseModule.forRoot('mongodb://127.0.0.1:27017',
     {dbName: 'db_desafio'}),
-    UsersModule 
+    UsersModule, 
   ],
   controllers: [AppController],
   providers: [AppService],

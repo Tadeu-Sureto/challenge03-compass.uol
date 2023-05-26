@@ -7,17 +7,17 @@ export class Post extends Document {
   @Prop()
   user: string;
 
-  @Prop()
-  post_date: string;
-
-  @Prop()
+    @Prop()
   description: string;
 
   @Prop()
   like: number;
 
   @Prop()
-  comments: Array;
+  comments: Array<Comment>;
+
+  @Prop()
+  post_date: string;
 
   @Prop()
   url_imagem: string;
