@@ -4,5 +4,4 @@ export class UpdatePost {
     description?: string;
     likes?: number;
     url_imagem?: string;
-    comments?: Comment[];
   }

@@ -4,9 +4,6 @@ export type CommentDocument = Comment & Document;
 
 @Schema()
 export class Comment {
-  @Prop({ type: MongooseSchema.Types.ObjectId, ref: 'Comment' })
-  postId: string;
-
   @Prop()
   user: string;
 

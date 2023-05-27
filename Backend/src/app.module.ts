@@ -3,7 +3,6 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
 import { MongooseModule } from '@nestjs/mongoose';
-import { CommentsModule } from './comments/comments.module';
 import { PostsModule } from './posts/posts.module';
 
 @Module({
@@ -13,7 +12,6 @@ import { PostsModule } from './posts/posts.module';
     {dbName: 'db_desafio'}),
     UsersModule,
     PostsModule,
-    CommentsModule
   ],
   controllers: [AppController],
   providers: [AppService],

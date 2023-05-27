@@ -4,86 +4,18 @@ import './Login.css';
 import Sideimg from '../assets/side image.png';
 import User from '../assets/User.png';
 import Password from '../assets/Password.png';
-
+import { useNavigate } from 'react-router-dom';
 import Social from './Social';
 
-interface Posts {
-  "user": string;
-  "post-date": string;
-  "description": string;
-  "likes": number;
-  "comments": {
-      "user": string;
-      "comment": string;
-  }[],
-  "url-imagem": string;
-}
-
-interface Users {
-  name: string;
-  user: string;
-  birthdate: string;
-  email: string;
-  password: string;
-  profile_photo: string;
-}
-
-interface UserPattern {
-  name: string;
-  user: string;
-  birthdate: string;
-  email: string;
-  profile_photo: string;
-}
-
-interface BodyRequest {
-  username: string;
-  password: string;
-}
-
-interface PostResponse { 
-  login: boolean, 
-  userData: {
-    name: string;
-    user: string;
-    email: string;
-    birthdate: string;
-    profile_photo: string;
-  }
-}
-
+import { Posts, Users, UserPattern, PostResponse } from '../models/interfaces';
+import MakeRequest from '../hooks/MakeRequest';
 
 const Login: React.FunctionComponent = () => {
-
+  const nav = useNavigate();
   const [username, setUsername] = React.useState<string>("");
   const [password, setPassword] = React.useState<string>("");
   const [login, setLogin] = React.useState<boolean>(false);
-  const [users, setUsers] = React.useState<Users[]>([{
-    name: "",
-    user: "",
-    birthdate: "",
-    email: "",
-    password: "",
-    profile_photo: "",
-  }]);
-  const [user, setUser] = React.useState<UserPattern>({
-    name: "",
-    user: "",
-    birthdate: "",
-    email: "",
-    profile_photo: "",
-  })
-  const [posts, setPost] = React.useState<Posts[]>([{
-    user: "",
-    "post-date": "",
-    description: "",
-    likes: 0,
-    comments: [{
-        user: "",
-        comment: "",
-    }],
-    "url-imagem": ""
-  }]);
+
 
   useEffect(() => {
     const email = document.getElementById("email") as HTMLInputElement;
@@ -152,30 +84,12 @@ const Login: React.FunctionComponent = () => {
     }
   }
 
-  const fetchSocialAPI = async (URL: string, method: string, body: BodyRequest | undefined = undefined) => {
-     return fetch(URL, {
-        method,
-        credentials: 'include',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(body)
-    })
-    .then(response => response.json())
-    .then(data => {
-        return data;
-    })
-  }
-
-
-  const makePOST = async (): Promise<PostResponse> => {
-    return fetchSocialAPI("http://localhost:3100/api/v1/login", "POST", {username, password})
-  }
-
-  const getUsers = async (): Promise<Users[]> => {
-    return fetchSocialAPI("http://localhost:3100/api/v1/users", "GET");
-  }
-
-  const getPosts = async (): Promise<Posts[]> => {
-    return fetchSocialAPI("http://localhost:3100/api/v1/user/posts", "GET");
+  const checkAuthentication = () => {
+    const user = localStorage.getItem('authenticatedUser');
+    
+    if(typeof user === 'string') {
+      nav("/Social")
+    }
   }
 
   const handleSubmit = async (event: any) => {
@@ -184,32 +98,20 @@ const Login: React.FunctionComponent = () => {
     const message = document.getElementById("textForm") as HTMLElement;
     message.innerHTML = "";
 
-    console.log(
-      {
-        user: username, pass: password
-      }
-    )
+    const data = await MakeRequest("http://localhost:3100/users/login", "POST", {username, password})
 
-    const data = await makePOST()
-    
-
-    if(data.login) {
-      const users = await getUsers();
-      const post = await getPosts();
-
-      setLogin(data.login)
-      setUser(data.userData);
-      setUsers(users);
-      setPost(post);
+    if(typeof data.id === 'string') {
+      localStorage.setItem('authenticatedUser', data.id);
+      checkAuthentication()
     } else {
       message.innerHTML = "Usuário não encontrado";
     }
   }
 
-  if(login) {
-    console.log(user)
-    return <Social user={user} users={users} posts={posts} />
-  }
+  useEffect(() => {
+    checkAuthentication();
+  })
+
 
   return (
     <main>

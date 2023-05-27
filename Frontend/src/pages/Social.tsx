@@ -1,5 +1,6 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import './Social.css';
+import { useNavigate } from 'react-router-dom';
 
 import Logo from "../assets/compass.uol_negativo 1.png";
 import VectorHome from "../assets/vector-home.png"
@@ -14,45 +15,60 @@ import Like from "../assets/vector-like.png";
 import Comments from "../assets/vector-comments.png";
 import Share from "../assets/vector-share.png";
 
-interface Posts {
-    "user": string;
-    "post-date": string;
-    "description": string;
-    "likes": number;
-    "comments": {
-        "user": string;
-        "comment": string;
-    }[],
-    "url-imagem": string;
-  }
-  
-interface Users {
-    name: string;
-    user: string;
-    birthdate: string;
-    email: string;
-    password: string;
-    profile_photo: string;
-}
+import MakeRequest from '../hooks/MakeRequest';
+import { Posts, UserPattern, Users } from '../models/interfaces';
 
-interface UserPattern {
-    name: string;
-    user: string;
-    birthdate: string;
-    email: string;
-    profile_photo: string;
-  }
 
-interface ComponentTypes {
-    user: UserPattern;
-    users: Users[];
-    posts: Posts[];
-}
+const Social: React.FunctionComponent = () => {
+    const nav = useNavigate();
+    const [users, setUsers] = React.useState<Users[]>([{
+        name: "",
+        user: "",
+        birthdate: "",
+        email: "",
+        password: "",
+        profile_photo: "",
+      }]);
+      const [user, setUser] = React.useState<UserPattern>({
+        name: "",
+        user: "",
+        birthdate: "",
+        email: "",
+        profile_photo: "",
+      })
+      const [posts, setPost] = React.useState<Posts[]>([{
+        user: "",
+        "post-date": "",
+        description: "",
+        likes: 0,
+        comments: [{
+            user: "",
+            comment: "",
+        }],
+        "url-imagem": ""
+      }]);
 
-const Social: React.FunctionComponent<ComponentTypes> = (props: ComponentTypes) => {
-    
-    console.log("POSTS:")
-    console.log(props.posts)
+    useEffect(() => {
+        const getAllData = async () => {
+            const isAuth = localStorage.getItem('authenticatedUser');
+            console.log(isAuth)
+            if(typeof isAuth !== 'string') {
+                nav("/Login")
+            } else {
+                const users = await MakeRequest("http://localhost:3100/users", "GET");
+                const post = await MakeRequest("http://localhost:3100/posts", "GET");
+                const user = await await MakeRequest("http://localhost:3100/users/" + isAuth, "GET");
+              
+                if(user) setUser(user);
+                if(users) setUsers(users);
+                if(post) setPost(post);
+        
+                console.log(users)
+                console.log(posts)  
+            }
+        }
+        getAllData()
+    }, [nav])
 
     return (
     <div className="container">
@@ -69,15 +85,15 @@ const Social: React.FunctionComponent<ComponentTypes> = (props: ComponentTypes) 
             </div>
 
             <div className="logged-in-user">
-                <h3>{props.user.name}</h3>
+                <h3>{user.name}</h3>
                 
-                <img src={props.user.profile_photo} alt="Imagem de Exibição do Usuário"/>
+                <img src={user.profile_photo} alt="Imagem de Exibição do Usuário"/>
             </div>
         </div>
 
         <div className="my-post">
             <div className="img-and-post">
-                <img className="img-post-user" src={props.user.profile_photo} alt="Imagem de Exibição do Usuário"/>
+                <img className="img-post-user" src={user.profile_photo} alt="Imagem de Exibição do Usuário"/>
                 <textarea className="input-my-post" placeholder="No que você está pensando?" cols={110}></textarea>
             </div>
                 
@@ -95,12 +111,12 @@ const Social: React.FunctionComponent<ComponentTypes> = (props: ComponentTypes) 
         </div>
 
         <div className='posts_container'>            
-            {props.posts && props.posts.map((post, i) => (
+            {posts && posts.map((post, i) => (
                     <div className="post" key={i}>
                     <div className="time-local-post">
-                        <img className="img-user" src={props.users.find(user => user.user === post.user)?.profile_photo} alt="Imagem de Exibição de Usuário" />
+                        <img className="img-user" src={user.profile_photo} alt="Imagem de Exibição de Usuário" />
                         <div className="name-vector">
-                            <h3>{props.users.find(user => user.user === post.user)?.name}</h3>
+                            <h3>{user.name}</h3>
                             <p><img src={Clock} alt="Pequena Imagem de um Relógio" /> &ensp; { new Date(post['post-date']).toLocaleString() }<span> Lindas Paisagens</span></p>
                         </div>
                     </div>
@@ -129,7 +145,7 @@ const Social: React.FunctionComponent<ComponentTypes> = (props: ComponentTypes) 
                     </div>
                     
                     <div className="post-users">
-                        <img className="img-post-users" src={props.user.profile_photo} alt="Imagem de Exibição do Usuário"/>
+                        <img className="img-post-users" src={user.profile_photo} alt="Imagem de Exibição do Usuário"/>
                         <textarea className="input-post-users" placeholder="O que você está pensando?" cols={110}></textarea>
         
                         <div className="vector">
@@ -148,8 +164,8 @@ const Social: React.FunctionComponent<ComponentTypes> = (props: ComponentTypes) 
                         <div className="comments-tags">
                             {post.comments.map((comment, i) => (
                                 <div className='comments' key={i}>
-                                    <img className="comments-img" src={props.users.find(user => comment.user === user.user)?.profile_photo} alt="Imagem de Exibição do Usuário" />
-                                    <p className="comments-text"><strong>{props.users.find(user => comment.user === user.user)?.name}</strong> {comment.comment}</p>
+                                    <img className="comments-img" src={user.profile_photo} alt="Imagem de Exibição do Usuário" />
+                                    <p className="comments-text"><strong>{comment.user}</strong> {comment.comment}</p>
                                 </div>
                             ))}
                         </div>
@@ -169,7 +185,7 @@ const Social: React.FunctionComponent<ComponentTypes> = (props: ComponentTypes) 
 
                 <div className="friends-list">
                     <ul className="ul-friends-list">
-                        {props.users.map((friend, i) => (
+                        {users.map((friend, i) => (
                             <li key={i}>
                                 <img src={friend.profile_photo} alt="Foto Contato"/>
                                 <p>{friend.name}</p>

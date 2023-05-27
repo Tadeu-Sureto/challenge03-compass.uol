@@ -4,8 +4,6 @@ import { Comment, CommentSchema } from '../comments/comment';
 import { PostsService } from './posts.service';
 import { PostsController } from './posts.controller';
 import { MongooseModule } from '@nestjs/mongoose';
-import { CommentsController } from 'src/comments/comments.controller';
-import { CommentsService } from 'src/comments/comments.service';
 
 @Module({
   imports: [
@@ -20,8 +18,8 @@ import { CommentsService } from 'src/comments/comments.service';
       }
     ])
   ],
-  exports: [],
-  controllers: [PostsController, CommentsController],
-  providers: [PostsService, CommentsService]
+  
+  controllers: [PostsController],
+  providers: [PostsService]
 })
 export class PostsModule {}

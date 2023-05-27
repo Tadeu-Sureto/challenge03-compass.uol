@@ -37,4 +37,8 @@ export class UsersService {
   async delete(id: string): Promise<any> {
     return this.UserModel.deleteOne({_id: id,}).exec();
   }
+
+  async findByUsernameAndPassword(user: string, password: string): Promise<User | null> {
+    return this.UserModel.findOne({ user, password }).exec();
+  }
 }
