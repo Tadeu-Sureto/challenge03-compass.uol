@@ -5,16 +5,13 @@ import Sideimg from '../assets/side image.png';
 import User from '../assets/User.png';
 import Password from '../assets/Password.png';
 import { useNavigate } from 'react-router-dom';
-import Social from './Social';
 
-import { Posts, Users, UserPattern, PostResponse } from '../models/interfaces';
 import MakeRequest from '../hooks/MakeRequest';
 
 const Login: React.FunctionComponent = () => {
   const nav = useNavigate();
   const [username, setUsername] = React.useState<string>("");
   const [password, setPassword] = React.useState<string>("");
-  const [login, setLogin] = React.useState<boolean>(false);
 
 
   useEffect(() => {

@@ -1,16 +1,18 @@
 export interface Posts {
+  "_id"?: string;
   "user": string;
-  "post-date": string;
+  "post_date"?: Date;
   "description": string;
   "likes": number;
   "comments": {
       "user": string;
       "comment": string;
   }[],
-  "url-imagem": string;
+  "url_imagem": string;
 }
 
 export interface Users {
+  _id?: string;
   name: string;
   user: string;
   birthdate: string;

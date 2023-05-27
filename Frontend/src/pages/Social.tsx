@@ -38,14 +38,13 @@ const Social: React.FunctionComponent = () => {
       })
       const [posts, setPost] = React.useState<Posts[]>([{
         user: "",
-        "post-date": "",
         description: "",
         likes: 0,
         comments: [{
             user: "",
             comment: "",
         }],
-        "url-imagem": ""
+        url_imagem: ""
       }]);
 
     useEffect(() => {
@@ -111,19 +110,19 @@ const Social: React.FunctionComponent = () => {
         </div>
 
         <div className='posts_container'>            
-            {posts && posts.map((post, i) => (
-                    <div className="post" key={i}>
+            {posts && posts.map((post) => (
+                    <div className="post" key={post._id}>
                     <div className="time-local-post">
-                        <img className="img-user" src={user.profile_photo} alt="Imagem de Exibição de Usuário" />
+                        <img className="img-user" src={users.find(userOfPost => userOfPost.user === post.user)?.profile_photo} alt="Imagem de Exibição de Usuário" />
                         <div className="name-vector">
-                            <h3>{user.name}</h3>
-                            <p><img src={Clock} alt="Pequena Imagem de um Relógio" /> &ensp; { new Date(post['post-date']).toLocaleString() }<span> Lindas Paisagens</span></p>
+                            <h3>{post.user}</h3>
+                            <p><img src={Clock} alt="Pequena Imagem de um Relógio" /> &ensp; {post.post_date && post.post_date.toLocaleString()}<span> Lindas Paisagens</span></p>
                         </div>
                     </div>
                     
                     <p className="post-user-logged">{post.description}</p>
                     
-                    <img className="post-img" src={post['url-imagem']} alt="Imagem de Postagem" />
+                    <img className="post-img" src={post.url_imagem} alt="Imagem de Postagem" />
         
                     <div className="menu-img">
                         <ul>
@@ -164,8 +163,8 @@ const Social: React.FunctionComponent = () => {
                         <div className="comments-tags">
                             {post.comments.map((comment, i) => (
                                 <div className='comments' key={i}>
-                                    <img className="comments-img" src={user.profile_photo} alt="Imagem de Exibição do Usuário" />
-                                    <p className="comments-text"><strong>{comment.user}</strong> {comment.comment}</p>
+                                    <img className="comments-img" src={users.find(userComment => userComment.user === comment.user)?.profile_photo} alt="Imagem de Exibição do Usuário" />
+                                    <p className="comments-text"><strong>{users.find(userComment => userComment.user === comment.user)?.name}</strong> {comment.comment}</p>
                                 </div>
                             ))}
                         </div>

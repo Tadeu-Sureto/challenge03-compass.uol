@@ -97,6 +97,8 @@ function validateForm(event: React.SyntheticEvent<HTMLFormElement>) {
     successMsg.textContent = 'Registro efetuado com sucesso!';
     successMsg.style.color = '#E9B425';
     document.getElementById('textForm')!.appendChild(successMsg);
+
+    
   }
 }else{
   document.getElementById('textForm')!.innerHTML = 'Por favor, preencha todos<br>os campos corretamente.';
