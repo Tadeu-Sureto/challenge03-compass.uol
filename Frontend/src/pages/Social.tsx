@@ -115,7 +115,7 @@ const Social: React.FunctionComponent = () => {
                     <div className="time-local-post">
                         <img className="img-user" src={users.find(userOfPost => userOfPost.user === post.user)?.profile_photo} alt="Imagem de Exibição de Usuário" />
                         <div className="name-vector">
-                            <h3>{post.user}</h3>
+                            <h3>{users.find(userOfPost => userOfPost.user === post.user)?.name}</h3>
                             <p><img src={Clock} alt="Pequena Imagem de um Relógio" /> &ensp; {post.post_date && post.post_date.toLocaleString()}<span> Lindas Paisagens</span></p>
                         </div>
                     </div>

@@ -7,16 +7,16 @@ export class User extends Document {
   @Prop()
   name: string;
 
-  @Prop()
+  @Prop({ unique: true, required: true })
   user: string;
 
   @Prop()
   birthdate: string;
 
-  @Prop()
+  @Prop({ unique: true, required: true })
   email: string;
 
-  @Prop()
+  @Prop({ required: true })
   password: string;
 
   @Prop()

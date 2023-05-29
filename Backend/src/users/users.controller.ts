@@ -33,7 +33,6 @@ export class UsersController {
     this.UsersService.delete(id);
   }
 
-  // LOGIN ROUTE
   @Post('login')
   async loginUser(@Body('username') username: string, @Body('password') password: string) {
     const user = await this.UsersService.findByUsernameAndPassword(username, password);

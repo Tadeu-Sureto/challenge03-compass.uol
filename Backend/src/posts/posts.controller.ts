@@ -35,8 +35,6 @@ export class PostsController {
     this.postsService.delete(id);
   }
 
-  // rotas dos comments
-
   @Get(':id/comments')
   getPostComments(@Param('id') postId: string) {
     return this.postsService.getPostComments(postId);

@@ -44,3 +44,11 @@ export interface PostResponse {
     profile_photo: string;
   }
 }
+
+export interface IUsersRegister {
+  name: string;
+  user: string;
+  birth: string;
+  email: string;
+  password: string;
+}
